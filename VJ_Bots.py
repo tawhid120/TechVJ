@@ -60,8 +60,8 @@ class Config:
     # Optional configurations
     STRING_SESSION: Optional[str] = os.environ.get("STRING_SESSION", None)
     CHANNEL_ID: Optional[str] = os.environ.get("CHANNEL_ID", None)
-    ADMINS: list = [int(x) for x in os.environ.get("ADMINS", "").split() if x.isdigit()]
-    
+    ADMINS: list = field(default_factory=lambda: [int(x) for x in os.environ.get("ADMINS", "").split() if x.isdigit()])
+
     # Feature flags
     LOGIN_SYSTEM: bool = os.environ.get("LOGIN_SYSTEM", "True").lower() == "true"
     ERROR_MESSAGE: bool = os.environ.get("ERROR_MESSAGE", "True").lower() == "true"
