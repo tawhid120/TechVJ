@@ -757,6 +757,7 @@ class SaveRestrictedBot(Client):
             plugins=dict(root="plugins"),
             workers=config.MAX_WORKERS,
             sleep_threshold=config.SLEEP_THRESHOLD
+        )
         # 👇 এই ফাংশনটিও ৪টি স্পেস (বা ১টি ট্যাব) দিয়ে শুরু হবে
     async def start(self):
         """Start the bot"""
