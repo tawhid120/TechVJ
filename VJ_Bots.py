@@ -757,9 +757,17 @@ class SaveRestrictedBot(Client):
             plugins=dict(root="plugins"),
             workers=config.MAX_WORKERS,
             sleep_threshold=config.SLEEP_THRESHOLD
-        )
-            # ... __init__ মেথডের পরে এটি যোগ করুন ...
-
+        # 👇 এই ফাংশনটিও ৪টি স্পেস (বা ১টি ট্যাব) দিয়ে শুরু হবে
+    async def start(self):
+        """Start the bot"""
+        await super().start()
+        me = await self.get_me()
+        logger.info(f"Bot started as @{me.username}")
+        logger.info("Powered By @VJ_Bots")
+    
+    # 👇 এই ফাংশনটিও ৪টি স্পেস (বা ১টি ট্যাব) দিয়ে শুরু হবে
+    async def stop(self, *args):
+        """Stop the bot"""
         await super().stop()
         logger.info("Bot stopped")
 
