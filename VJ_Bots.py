@@ -19,7 +19,8 @@ from datetime import datetime, timedelta
 from dataclasses import dataclass, field
 
 import motor.motor_asyncio
-from pyrogram import Client, filters, enums
+from pyrogram import filters, enums
+from pyromod import Client
 from pyrogram.types import (
     Message, 
     InlineKeyboardMarkup, 
@@ -759,45 +760,6 @@ class SaveRestrictedBot(Client):
         )
             # ... __init__ মেথডের পরে এটি যোগ করুন ...
 
-    async def ask(self, chat_id: int, text: str, filters=None, timeout: int = 300):
-        """
-        একটি প্রশ্ন পাঠাতে এবং একটি প্রাইভেট চ্যাটে একই ব্যবহারকারীর
-        কাছ থেকে উত্তরের জন্য অপেক্ষা করার জন্য হেলপার মেথড।
-        """
-        try:
-            # প্রশ্নটি পাঠান
-            sent_message = await self.send_message(
-                chat_id, 
-                text, 
-                parse_mode=enums.ParseMode.HTML
-            )
-            
-            # ব্যবহারকারীর উত্তরের জন্য অপেক্ষা করুন
-            # প্রাইভেট চ্যাটে, from_user_id এবং chat_id একই
-            response = await self.wait_for_message(
-                chat_id=chat_id,
-                from_user_id=chat_id,
-                filters=filters,
-                timeout=timeout
-            )
-            
-            # ব্যবহারকারীর উত্তরটি রিটার্ন করুন
-            return response
-        
-        except asyncio.TimeoutError:
-            # এটি /login কমান্ডের try/except ব্লকে ধরা পড়বে
-            raise
-
-    
-    async def start(self):
-        """Start the bot"""
-        await super().start()
-        me = await self.get_me()
-        logger.info(f"Bot started as @{me.username}")
-        logger.info("Powered By @VJ_Bots")
-    
-    async def stop(self, *args):
-        """Stop the bot"""
         await super().stop()
         logger.info("Bot stopped")
 
