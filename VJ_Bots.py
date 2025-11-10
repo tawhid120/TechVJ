@@ -16,7 +16,7 @@ import logging
 import time
 from typing import Optional, Tuple, Dict, Any
 from datetime import datetime, timedelta
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import motor.motor_asyncio
 from pyrogram import Client, filters, enums
