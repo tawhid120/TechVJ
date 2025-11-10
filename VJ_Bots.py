@@ -757,6 +757,37 @@ class SaveRestrictedBot(Client):
             workers=config.MAX_WORKERS,
             sleep_threshold=config.SLEEP_THRESHOLD
         )
+            # ... __init__ মেথডের পরে এটি যোগ করুন ...
+
+    async def ask(self, chat_id: int, text: str, filters=None, timeout: int = 300):
+        """
+        একটি প্রশ্ন পাঠাতে এবং একটি প্রাইভেট চ্যাটে একই ব্যবহারকারীর
+        কাছ থেকে উত্তরের জন্য অপেক্ষা করার জন্য হেলপার মেথড।
+        """
+        try:
+            # প্রশ্নটি পাঠান
+            sent_message = await self.send_message(
+                chat_id, 
+                text, 
+                parse_mode=enums.ParseMode.HTML
+            )
+            
+            # ব্যবহারকারীর উত্তরের জন্য অপেক্ষা করুন
+            # প্রাইভেট চ্যাটে, from_user_id এবং chat_id একই
+            response = await self.wait_for_message(
+                chat_id=chat_id,
+                from_user_id=chat_id,
+                filters=filters,
+                timeout=timeout
+            )
+            
+            # ব্যবহারকারীর উত্তরটি রিটার্ন করুন
+            return response
+        
+        except asyncio.TimeoutError:
+            # এটি /login কমান্ডের try/except ব্লকে ধরা পড়বে
+            raise
+
     
     async def start(self):
         """Start the bot"""
